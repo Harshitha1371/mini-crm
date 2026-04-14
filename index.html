@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini CRM Dashboard</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h2>Mini CRM</h2>
+    <p>Lead Manager</p>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+
+    <h1>Dashboard</h1>
+
+    <!-- FORM CARD -->
+    <div class="card">
+      <h3>Add New Lead</h3>
+
+      <form id="leadForm">
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="text" id="source" placeholder="Source" required>
+        <button type="submit">Add Lead</button>
+      </form>
+    </div>
+
+    <!-- LEADS -->
+    <div class="card">
+      <h3>Leads</h3>
+      <div id="leadList" class="lead-grid"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

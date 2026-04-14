@@ -1,0 +1,182 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #f4f6f9;
+}
+
+/* Layout */
+.container {
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background: #111;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  margin-bottom: 10px;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Form */
+input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  background: #111;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #333;
+}
+
+/* Leads grid */
+.lead-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+/* Lead card */
+.lead-card {
+  background: #fafafa;
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 5px solid #111;
+  transition: 0.3s;
+}
+
+.lead-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Status colors */
+.status {
+  font-weight: bold;
+}
+
+.new {
+  color: blue;
+}
+
+.contacted {
+  color: orange;
+}
+
+.converted {
+  color: green;
+}
+
+/* DARK MODE */
+body.dark {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+body.dark .card {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark input {
+  background: #1e293b;
+  color: white;
+  border: 1px solid #334155;
+}
+
+body.dark button {
+  background: #2563eb;
+}
+
+body.dark .lead-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 5px solid #2563eb;
+}
+
+/* PREMIUM CARD */
+.lead-card {
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 15px;
+  transition: 0.3s;
+}
+
+.lead-card:hover {
+  transform: scale(1.03);
+}
+
+/* HEADER */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* BADGES */
+.badge {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.new {
+  background: #3b82f6;
+  color: white;
+}
+
+.contacted {
+  background: #f59e0b;
+  color: white;
+}
+
+.converted {
+  background: #10b981;
+  color: white;
+}
+
+/* ACTION BUTTONS */
+.actions {
+  margin-top: 10px;
+}
+
+.actions button {
+  margin-right: 5px;
+}
