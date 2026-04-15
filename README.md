@@ -24,6 +24,9 @@ mini-crm/
 └── backend/
     └── server.js
 
+## 📸 Screenshot
+![Mini CRM](screenshot.png)
+
 ## ▶️ How to Run
 
 ### Backend

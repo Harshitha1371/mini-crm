@@ -1,45 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Mini CRM Dashboard</title>
-
+  <title>Mini CRM</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <div class="container">
 
   <!-- SIDEBAR -->
   <div class="sidebar">
-    <h2>Mini CRM</h2>
-    <p>Lead Manager</p>
+    <h2>🚀 Mini CRM</h2>
+<p>Smart Lead Manager</p>
+<hr style="border: 0.5px solid rgba(255,255,255,0.2); margin: 15px 0;">
+    <button onclick="toggleTheme()">🌙 Toggle</button>
   </div>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <div class="main">
-
     <h1>Dashboard</h1>
 
-    <!-- FORM CARD -->
-    <div class="card">
-      <h3>Add New Lead</h3>
+    <!-- FORM -->
+    <div class="form">
+      <input id="name" placeholder="Name">
+      <input id="email" placeholder="Email">
+      <input id="source" placeholder="Source">
 
-      <form id="leadForm">
-        <input type="text" id="name" placeholder="Name" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="text" id="source" placeholder="Source" required>
-        <button type="submit">Add Lead</button>
-      </form>
+      <select id="status">
+        <option>New</option>
+        <option>Contacted</option>
+        <option>Closed</option>
+      </select>
+
+      <button onclick="addLead()">Add Lead</button>
     </div>
+
+    <!-- SEARCH -->
+    <input id="search" placeholder="Search..." onkeyup="loadLeads()">
 
     <!-- LEADS -->
-    <div class="card">
-      <h3>Leads</h3>
-      <div id="leadList" class="lead-grid"></div>
-    </div>
-
+    <div id="leads"></div>
   </div>
 
 </div>

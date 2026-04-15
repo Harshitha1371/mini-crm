@@ -1,119 +1,151 @@
-console.log("Premium CRM Loaded 🚀");
+const BASE_URL = "http://localhost:5000/leads";
 
-const form = document.getElementById("leadForm");
-const leadList = document.getElementById("leadList");
+// ADD LEAD
+async function addLead() {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const source = document.getElementById("source").value;
+  const status = document.getElementById("status").value;
 
-const API = "http://127.0.0.1:5000/leads";
-
-// 🌙 Dark mode toggle
-const toggleBtn = document.createElement("button");
-toggleBtn.innerText = "🌙 Toggle Theme";
-toggleBtn.style.marginBottom = "15px";
-document.querySelector(".main").prepend(toggleBtn);
-
-toggleBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-});
-
-// 📥 Load leads
-async function loadLeads() {
-  try {
-    const res = await fetch(API);
-    const data = await res.json();
-    displayLeads(data);
-  } catch (err) {
-    console.log("Error:", err);
+  if (!name || !email || !source || !status) {
+    showToast("Fill all fields ❌");
+    return;
   }
-}
 
-// ➕ Add lead
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const lead = {
-    name: document.getElementById("name").value,
-    email: document.getElementById("email").value,
-    source: document.getElementById("source").value
-  };
-
-  await fetch(API, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(lead)
-  });
-
-  form.reset();
-  loadLeads();
-});
-
-// 🎨 Display leads (Premium UI)
-function displayLeads(leads) {
-  leadList.innerHTML = "";
-
-  leads.forEach((lead, index) => {
-    const card = document.createElement("div");
-    card.classList.add("lead-card");
-
-    let statusClass = "";
-    if (lead.status === "New") statusClass = "new";
-    if (lead.status === "Contacted") statusClass = "contacted";
-    if (lead.status === "Converted") statusClass = "converted";
-
-    card.innerHTML = `
-      <div class="card-header">
-        <h3>${lead.name}</h3>
-        <span class="badge ${statusClass}">${lead.status}</span>
-      </div>
-
-      <p><strong>Email:</strong> ${lead.email}</p>
-      <p><strong>Source:</strong> ${lead.source}</p>
-      <p><strong>Notes:</strong> ${lead.notes || "None"}</p>
-
-      <div class="actions">
-        <button onclick="updateStatus(${index})">Update</button>
-        <button onclick="addNote(${index})">Add Note</button>
-      </div>
-    `;
-
-    leadList.appendChild(card);
-  });
-}
-
-// 🔄 Update status
-async function updateStatus(index) {
-  const statuses = ["New", "Contacted", "Converted"];
-
-  const res = await fetch(API);
-  const leads = await res.json();
-
-  let current = statuses.indexOf(leads[index].status);
-  let newStatus = statuses[(current + 1) % 3];
-
-  await fetch(`${API}/${index}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ status: newStatus })
-  });
-
-  loadLeads();
-}
-
-// 📝 Add note
-async function addNote(index) {
-  const note = prompt("Enter follow-up note:");
-
-  if (note) {
-    await fetch(`${API}/${index}/note`, {
-      method: "PUT",
+  try {
+    await fetch(BASE_URL, {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ note })
+      body: JSON.stringify({ name, email, source, status })
     });
 
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("source").value = "";
+
+    showToast("Lead added ✅");
     loadLeads();
+
+  } catch (err) {
+    showToast("Server not reachable ❌");
   }
 }
 
-// 🚀 Initial load
+// LOAD LEADS
+async function loadLeads() {
+  try {
+    const res = await fetch(BASE_URL);
+    const data = await res.json();
+
+    const search = document.getElementById("search").value.toLowerCase();
+    const container = document.getElementById("leads");
+    container.innerHTML = "";
+
+    data.forEach((lead, i) => {
+      if (
+        !lead.name.toLowerCase().includes(search) &&
+        !lead.email.toLowerCase().includes(search)
+      ) return;
+
+      const card = document.createElement("div");
+      card.className = "lead-card";
+
+      card.innerHTML = `
+        <h3>${lead.name}</h3>
+        <p>${lead.email}</p>
+        <p>Source: ${lead.source}</p>
+        <p><b>Note:</b> ${lead.notes || "No notes yet"}</p>
+
+        <span class="status ${lead.status.toLowerCase()}">${lead.status}</span>
+
+        <br><br>
+
+        <select onchange="updateStatus(${i}, this.value)">
+          <option ${lead.status === "New" ? "selected" : ""}>New</option>
+          <option ${lead.status === "Contacted" ? "selected" : ""}>Contacted</option>
+          <option ${lead.status === "Closed" ? "selected" : ""}>Closed</option>
+        </select>
+
+        <br><br>
+
+        <input placeholder="Add note" onchange="addNote(${i}, this.value)">
+
+        <br><br>
+
+        <button onclick="deleteLead(${i})">Delete</button>
+      `;
+
+      container.appendChild(card);
+    });
+
+  } catch (err) {
+    showToast("Server not reachable ❌");
+  }
+}
+
+// UPDATE STATUS
+async function updateStatus(index, status) {
+  await fetch(`${BASE_URL}/${index}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status })
+  });
+
+  loadLeads();
+}
+
+// ADD NOTE
+async function addNote(index, note) {
+  await fetch(`${BASE_URL}/${index}/note`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ note })
+  });
+
+  loadLeads();
+}
+
+// DELETE
+async function deleteLead(index) {
+  await fetch(`${BASE_URL}/${index}`, {
+    method: "DELETE"
+  });
+
+  showToast("Deleted 🗑️");
+  loadLeads();
+}
+
+// THEME
+function toggleTheme() {
+  document.body.classList.toggle("dark");
+}
+
+// TOAST
+function showToast(msg) {
+  const toast = document.createElement("div");
+  toast.innerText = msg;
+  toast.className = "toast";
+  document.body.appendChild(toast);
+
+  setTimeout(() => toast.remove(), 2000);
+}
+
+// INIT
 loadLeads();
+
+// ENTER KEY NAVIGATION
+document.getElementById("name").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") document.getElementById("email").focus();
+});
+
+document.getElementById("email").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") document.getElementById("source").focus();
+});
+
+document.getElementById("source").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") document.getElementById("status").focus();
+});
+
+document.getElementById("status").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") addLead();
+});

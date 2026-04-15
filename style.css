@@ -1,182 +1,203 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
-
+/* RESET */
 body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
   background: #f4f6f9;
+  transition: 0.3s;
 }
 
-/* Layout */
+/* LAYOUT */
 .container {
   display: flex;
 }
 
-/* Sidebar */
+/* SIDEBAR */
 .sidebar {
-  width: 220px;
+  width: 240px;
   height: 100vh;
-  background: #111;
+  background: linear-gradient(180deg, #2c2c54, #40407a);
   color: white;
-  padding: 20px;
+  padding: 25px;
 }
 
 .sidebar h2 {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
-/* Main */
+.sidebar p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.sidebar button {
+  margin-top: 20px;
+  padding: 10px;
+  border: none;
+  background: #fbc531;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.sidebar button:hover {
+  background: #e1a500;
+}
+
+/* MAIN */
 .main {
   flex: 1;
-  padding: 20px;
+  padding: 30px;
 }
 
+/* HEADER */
 h1 {
   margin-bottom: 20px;
 }
 
-/* Card */
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+/* FORM */
+.form input,
+.form select {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 200px;
+  transition: 0.2s;
 }
 
-/* Form */
-input {
-  display: block;
-  width: 100%;
+.form input:focus,
+.form select:focus {
+  outline: none;
+  border: 1px solid #4834d4;
+  box-shadow: 0 0 5px rgba(72, 52, 212, 0.3);
+}
+
+.form button {
+  padding: 10px 18px;
+  background: #4834d4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.form button:hover {
+  background: #372bb5;
+}
+
+/* SEARCH */
+#search {
   padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
+  margin: 10px;
+  width: 250px;
+  border-radius: 8px;
   border: 1px solid #ccc;
 }
 
-button {
-  padding: 10px;
-  border: none;
-  background: #111;
+/* LEAD CARDS */
+.lead-card {
+  background: white;
+  padding: 18px;
+  margin-top: 15px;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  transition: 0.2s;
+}
+
+.lead-card:hover {
+  transform: translateY(-3px);
+}
+
+/* TEXT */
+.lead-card h3 {
+  margin: 0;
+}
+
+.lead-card p {
+  margin: 5px 0;
+}
+
+/* STATUS BADGES */
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* PROFESSIONAL COLORS */
+.status.new {
+  background: #4f46e5; /* indigo */
   color: white;
-  border-radius: 5px;
+}
+
+.status.contacted {
+  background: #f59e0b; /* amber */
+  color: white;
+}
+
+.status.closed {
+  background: #10b981; /* green */
+  color: white;
+}
+
+/* DROPDOWN + INPUT INSIDE CARD */
+.lead-card select,
+.lead-card input {
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* DELETE BUTTON */
+.lead-card button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #e84118;
+  color: white;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-button:hover {
-  background: #333;
+.lead-card button:hover {
+  background: #c23616;
 }
 
-/* Leads grid */
-.lead-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 15px;
-}
-
-/* Lead card */
-.lead-card {
-  background: #fafafa;
-  padding: 15px;
-  border-radius: 10px;
-  border-left: 5px solid #111;
-  transition: 0.3s;
-}
-
-.lead-card:hover {
-  transform: translateY(-5px);
-}
-
-/* Status colors */
-.status {
-  font-weight: bold;
-}
-
-.new {
-  color: blue;
-}
-
-.contacted {
-  color: orange;
-}
-
-.converted {
-  color: green;
-}
-
-/* DARK MODE */
+/* 🌙 DARK MODE */
 body.dark {
-  background: #0f172a;
-  color: #e2e8f0;
-}
-
-body.dark .card {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-body.dark input {
-  background: #1e293b;
+  background: #121212;
   color: white;
-  border: 1px solid #334155;
 }
 
-body.dark button {
-  background: #2563eb;
+body.dark .main {
+  background: #1e1e1e;
 }
 
 body.dark .lead-card {
-  background: rgba(255, 255, 255, 0.05);
-  border-left: 5px solid #2563eb;
+  background: #2a2a2a;
+  box-shadow: none;
 }
 
-/* PREMIUM CARD */
-.lead-card {
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 15px;
-  transition: 0.3s;
-}
-
-.lead-card:hover {
-  transform: scale(1.03);
-}
-
-/* HEADER */
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* BADGES */
-.badge {
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-.new {
-  background: #3b82f6;
+body.dark input,
+body.dark select {
+  background: #333;
   color: white;
+  border: 1px solid #555;
 }
 
-.contacted {
-  background: #f59e0b;
-  color: white;
+body.dark .sidebar {
+  background: linear-gradient(180deg, #1e1e2f, #2c2c3e);
 }
 
-.converted {
-  background: #10b981;
-  color: white;
+body.dark .form button {
+  background: #6c5ce7;
 }
 
-/* ACTION BUTTONS */
-.actions {
-  margin-top: 10px;
-}
-
-.actions button {
-  margin-right: 5px;
+body.dark .form button:hover {
+  background: #5a4bd1;
 }
